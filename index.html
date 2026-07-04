@@ -245,7 +245,7 @@ window.openChat=function(name){
     Object.values(snap.val()||{}).forEach(msg=>{
       const d=document.createElement("div");
       d.className="msg "+(msg.sender===me?"me":"them");
-      const bblStyle=msg.sender===me?'style="background:'+accentColor+'40;border-color:'+accentColor+'50"':'';
+      const bblStyle=msg.sender===me?'style="background:'+accentColor+'45;border-color:'+accentColor+'50"':'';
       d.innerHTML='<div class="bbl" '+bblStyle+'>'+msg.text+'</div><span class="mt">'+ft(msg.ts)+'</span>';
       msgs.appendChild(d);
     });
