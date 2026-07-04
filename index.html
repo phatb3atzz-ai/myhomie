@@ -2,316 +2,210 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MyHomie</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;color:#e0e6ed;}
-#login-screen{display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;padding:30px;}
-.login-logo{width:80px;height:80px;border-radius:50%;border:2px solid #1fb8a0;display:flex;align-items:center;justify-content:center;}
-.login-logo svg{width:40px;height:40px;stroke:#1fb8a0;fill:none;stroke-width:2;}
-.login-title{font-size:28px;font-weight:700;color:#fff;}
-.login-sub{font-size:14px;color:#6b7a8d;text-align:center;}
-.login-input{width:100%;max-width:320px;background:#131c26;border:1px solid #1e2d3d;border-radius:12px;padding:14px 18px;font-size:16px;color:#e0e6ed;outline:none;}
-.login-input:focus{border-color:#1fb8a0;}
-.login-btn{width:100%;max-width:320px;background:transparent;border:1.5px solid #1fb8a0;border-radius:12px;padding:14px;font-size:16px;color:#1fb8a0;cursor:pointer;}
-.login-error{color:#e05555;font-size:13px;display:none;}
+#login{display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;padding:30px;}
+.ltitle{font-size:28px;font-weight:700;color:#fff;}
+.lsub{font-size:14px;color:#6b7a8d;}
+.inp{width:100%;max-width:320px;background:#131c26;border:1px solid #1e2d3d;border-radius:12px;padding:14px 18px;font-size:16px;color:#e0e6ed;outline:none;}
+.inp:focus{border-color:#1fb8a0;}
+.btn{width:100%;max-width:320px;background:transparent;border:1.5px solid #1fb8a0;border-radius:12px;padding:14px;font-size:16px;color:#1fb8a0;cursor:pointer;}
+.err{color:#e05555;font-size:13px;display:none;}
 #app{display:none;flex-direction:column;height:100vh;}
-.statusbar{display:flex;justify-content:space-between;padding:10px 20px 4px;background:#0a0f14;}
-.statusbar span{font-size:12px;color:#6b7a8d;}
-.screen{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column;}
-.page{position:absolute;inset:0;display:flex;flex-direction:column;background:#0a0f14;transition:transform 0.25s ease;overflow:hidden;}
-.page.hidden{transform:translateX(100%);}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;}
-.topbar-title{font-size:22px;font-weight:700;color:#fff;}
-.topbar-icons{display:flex;gap:18px;}
-.topbar-icons svg{width:22px;height:22px;stroke:#1fb8a0;fill:none;stroke-width:2;cursor:pointer;}
-.chat-item{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
-.avatar{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
-.chat-info{flex:1;min-width:0;}
-.chat-name{font-size:16px;font-weight:600;color:#e0e6ed;}
-.chat-preview{font-size:13px;color:#6b7a8d;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.chat-time{font-size:11px;color:#6b7a8d;}
-.divider{height:0.5px;background:#1e2d3d;margin:0 20px;}
-.chat-topbar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #1e2d3d;}
-.back-svg{width:22px;height:22px;stroke:#1fb8a0;fill:none;stroke-width:2;cursor:pointer;flex-shrink:0;}
-.chat-av{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
-.chat-topbar-info{flex:1;}
-.chat-topbar-name{font-size:15px;font-weight:600;color:#e0e6ed;}
-.chat-topbar-status{font-size:11px;color:#1fb8a0;}
-.messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
+.sb{display:flex;justify-content:space-between;padding:10px 20px 4px;}
+.sb span{font-size:12px;color:#6b7a8d;}
+.screen{flex:1;overflow:hidden;position:relative;}
+.page{position:absolute;inset:0;display:flex;flex-direction:column;background:#0a0f14;transition:transform 0.25s;overflow:hidden;}
+.page.off{transform:translateX(100%);}
+.tb{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;}
+.tbtitle{font-size:22px;font-weight:700;color:#fff;}
+.ci{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
+.av{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
+.cn{font-size:16px;font-weight:600;color:#e0e6ed;}
+.cp{font-size:13px;color:#6b7a8d;margin-top:3px;}
+.div{height:0.5px;background:#1e2d3d;margin:0 20px;}
+.ctb{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #1e2d3d;}
+.bk{font-size:22px;color:#1fb8a0;cursor:pointer;font-weight:300;}
+.cav{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
+.cti{flex:1;}
+.ctn{font-size:15px;font-weight:600;color:#e0e6ed;}
+.cts{font-size:11px;color:#1fb8a0;}
+.msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
 .msg{max-width:78%;display:flex;flex-direction:column;gap:3px;}
 .msg.me{align-self:flex-end;align-items:flex-end;}
 .msg.them{align-self:flex-start;align-items:flex-start;}
-.bubble{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;}
-.me .bubble{background:#1fb8a020;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
-.them .bubble{background:#131c26;border:1px solid #1e2d3d;color:#e0e6ed;border-bottom-left-radius:4px;}
-.msg-time{font-size:10px;color:#6b7a8d;}
-.input-bar{display:flex;align-items:center;gap:10px;padding:10px 16px 20px;border-top:0.5px solid #1e2d3d;}
-.msg-input{flex:1;background:#131c26;border:1px solid #1e2d3d;border-radius:22px;padding:10px 16px;font-size:14px;color:#e0e6ed;outline:none;}
-.msg-input:focus{border-color:#1fb8a0;}
-.msg-input::placeholder{color:#6b7a8d;}
-.send-btn{width:40px;height:40px;border-radius:50%;background:#1fb8a0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:none;}
-.send-btn svg{width:18px;height:18px;stroke:#0a0f14;fill:none;stroke-width:2.5;}
-.bottomnav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
-.navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
-.navitem svg{width:24px;height:24px;stroke:#6b7a8d;fill:none;stroke-width:1.8;}
-.navitem span{font-size:10px;color:#6b7a8d;}
-.navitem.active svg{stroke:#1fb8a0;}
-.navitem.active span{color:#1fb8a0;}
-.notif-banner{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#131c26;border:1px solid #1fb8a0;border-radius:12px;padding:12px 20px;font-size:14px;color:#e0e6ed;z-index:999;display:none;max-width:300px;text-align:center;}
+.bbl{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;}
+.me .bbl{background:#1fb8a020;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
+.them .bbl{background:#131c26;border:1px solid #1e2d3d;color:#e0e6ed;border-bottom-left-radius:4px;}
+.mt{font-size:10px;color:#6b7a8d;}
+.ibar{display:flex;align-items:center;gap:10px;padding:10px 16px 20px;border-top:0.5px solid #1e2d3d;}
+.minp{flex:1;background:#131c26;border:1px solid #1e2d3d;border-radius:22px;padding:10px 16px;font-size:14px;color:#e0e6ed;outline:none;}
+.minp:focus{border-color:#1fb8a0;}
+.minp::placeholder{color:#6b7a8d;}
+.sbtn{width:40px;height:40px;border-radius:50%;background:#1fb8a0;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:18px;}
+.nav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:10px;color:#6b7a8d;}
+.ni.on{color:#1fb8a0;}
+.nb{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#131c26;border:1px solid #1fb8a0;border-radius:12px;padding:12px 20px;font-size:14px;color:#e0e6ed;z-index:999;display:none;max-width:300px;text-align:center;}
 </style>
 </head>
 <body>
-
-<div class="notif-banner" id="notif-banner"></div>
-
-<div id="login-screen">
-  <div class="login-logo">
-    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  </div>
-  <div class="login-title">MyHomie</div>
-  <div class="login-sub">Enter your name and password</div>
-  <input class="login-input" id="name-input" placeholder="Your name" maxlength="20"/>
-  <input class="login-input" id="pass-input" type="password" placeholder="Password"/>
-  <div class="login-error" id="login-error">Wrong password</div>
-  <button class="login-btn" onclick="login()">Let's go</button>
+<div class="nb" id="nb"></div>
+<div id="login">
+  <div class="ltitle">MyHomie</div>
+  <div class="lsub">Enter your name and password</div>
+  <input class="inp" id="ni" placeholder="Your name" maxlength="20"/>
+  <input class="inp" id="pi" type="password" placeholder="Password"/>
+  <div class="err" id="er">Wrong password</div>
+  <button class="btn" onclick="doLogin()">Let's go</button>
 </div>
-
 <div id="app">
-  <div class="statusbar">
-    <span id="status-name">MyHomie</span>
-    <span id="status-time">--:--</span>
+  <div class="sb">
+    <span id="sn">MyHomie</span>
+    <span id="st">--:--</span>
   </div>
   <div class="screen">
-    <div class="page" id="page-chats">
-      <div class="topbar">
-        <span class="topbar-title">Chats</span>
-        <div class="topbar-icons">
-          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </div>
-      </div>
-      <div class="divider"></div>
-      <div id="chat-list"></div>
+    <div class="page" id="p1">
+      <div class="tb"><span class="tbtitle">Chats</span></div>
+      <div class="div"></div>
+      <div id="cl"></div>
     </div>
-    <div class="page hidden" id="page-chat">
-      <div class="chat-topbar">
-        <svg class="back-svg" viewBox="0 0 24 24" onclick="goBack()"><path d="m15 18-6-6 6-6"/></svg>
-        <div class="chat-av" id="chat-av">?</div>
-        <div class="chat-topbar-info">
-          <div class="chat-topbar-name" id="chat-name">...</div>
-          <div class="chat-topbar-status">online</div>
+    <div class="page off" id="p2">
+      <div class="ctb">
+        <span class="bk" onclick="goBack()">&#8592;</span>
+        <div class="cav" id="cav">?</div>
+        <div class="cti">
+          <div class="ctn" id="ctn">...</div>
+          <div class="cts">online</div>
         </div>
       </div>
-      <div class="messages" id="messages"></div>
-      <div class="input-bar">
-        <input class="msg-input" id="msg-input" placeholder="Message..." onkeydown="if(event.key==='Enter')sendMessage()"/>
-        <button class="send-btn" onclick="sendMessage()">
-          <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/></svg>
-        </button>
+      <div class="msgs" id="msgs"></div>
+      <div class="ibar">
+        <input class="minp" id="mi" placeholder="Message..." onkeydown="if(event.key==='Enter')doSend()"/>
+        <button class="sbtn" onclick="doSend()">&#10148;</button>
       </div>
     </div>
   </div>
-  <div class="bottomnav">
-    <div class="navitem active">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <span>Chats</span>
-    </div>
-    <div class="navitem">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-      <span>Contacts</span>
-    </div>
-    <div class="navitem">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      <span>Settings</span>
-    </div>
+  <div class="nav">
+    <div class="ni on">&#128172; Chats</div>
+    <div class="ni">&#128100; Contacts</div>
+    <div class="ni">&#9881; Settings</div>
   </div>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCmlU9wGKlmOkAnzjFt0-ng1vlQlACr9Ik",
-  authDomain: "buddy-chat-a7aae.firebaseapp.com",
-  databaseURL: "https://buddy-chat-a7aae-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "buddy-chat-a7aae",
-  storageBucket: "buddy-chat-a7aae.firebasestorage.app",
-  messagingSenderId: "806705827259",
-  appId: "1:806705827259:web:a71e9754feaf5751fbc89e"
+import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+const cfg = {
+  apiKey:"AIzaSyCmlU9wGKlmOkAnzjFt0-ng1vlQlACr9Ik",
+  authDomain:"buddy-chat-a7aae.firebaseapp.com",
+  databaseURL:"https://buddy-chat-a7aae-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"buddy-chat-a7aae",
+  storageBucket:"buddy-chat-a7aae.firebasestorage.app",
+  messagingSenderId:"806705827259",
+  appId:"1:806705827259:web:a71e9754feaf5751fbc89e"
 };
-
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getDatabase(firebaseApp);
-
-const PASSWORD = "homie2024";
-
-let myName = '';
-let currentChat = '';
-let unsubMessages = null;
-let lastMsgCount = 0;
-
-const saved = localStorage.getItem('myhomie_name');
-if (saved) {
-  myName = saved;
-  showApp();
-} else {
-  document.getElementById('login-screen').style.display = 'flex';
-}
-
-window.login = function() {
-  const name = document.getElementById('name-input').value.trim();
-  const pass = document.getElementById('pass-input').value.trim();
-  const err = document.getElementById('login-error');
-  if (!name) return;
-  if (pass !== PASSWORD) {
-    err.style.display = 'block';
-    return;
-  }
-  err.style.display = 'none';
-  myName = name;
-  localStorage.setItem('myhomie_name', myName);
-  document.getElementById('login-screen').style.display = 'none';
-  showApp();
+const app = initializeApp(cfg);
+const db = getDatabase(app);
+const PASS = "homie2024";
+let me = "", chat = "", unsub = null;
+const saved = localStorage.getItem("mhn");
+if(saved){ me=saved; start(); } else { document.getElementById("login").style.display="flex"; }
+window.doLogin = function(){
+  const n=document.getElementById("ni").value.trim();
+  const p=document.getElementById("pi").value.trim();
+  if(!n) return;
+  if(p!==PASS){ document.getElementById("er").style.display="block"; return; }
+  me=n; localStorage.setItem("mhn",me);
+  document.getElementById("login").style.display="none";
+  start();
 };
-
-function showApp() {
-  document.getElementById('status-name').textContent = myName;
-  document.getElementById('app').style.display = 'flex';
-  set(ref(db, 'users/' + myName), { online: true });
+function start(){
+  document.getElementById("sn").textContent=me;
+  document.getElementById("app").style.display="flex";
+  set(ref(db,"users/"+me),{online:true});
+  if("Notification" in window) Notification.requestPermission();
   loadUsers();
-  requestNotificationPermission();
-  setInterval(() => {
-    const d = new Date();
-    document.getElementById('status-time').textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
-  }, 1000);
+  setInterval(()=>{
+    const d=new Date();
+    document.getElementById("st").textContent=d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes();
+  },1000);
 }
-
-function requestNotificationPermission() {
-  if ('Notification' in window) {
-    Notification.requestPermission();
-  }
+function ini(n){ return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); }
+function cid(a,b){ return [a,b].sort().join("_"); }
+function ft(ts){ const d=new Date(ts); return d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes(); }
+function notify(from,text){
+  const nb=document.getElementById("nb");
+  nb.textContent=from+": "+text;
+  nb.style.display="block";
+  setTimeout(()=>nb.style.display="none",4000);
+  try{ const a=new Audio("https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3"); a.volume=0.5; a.play(); }catch(e){}
+  if(Notification.permission==="granted") new Notification("MyHomie - "+from,{body:text});
 }
-
-function showNotification(from, text) {
-  const banner = document.getElementById('notif-banner');
-  banner.textContent = from + ': ' + text;
-  banner.style.display = 'block';
-  setTimeout(() => banner.style.display = 'none', 4000);
-  const audio = new Audio('https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3');
-  audio.volume = 0.5;
-  audio.play().catch(() => {});
-  if (Notification.permission === 'granted') {
-    new Notification('MyHomie — ' + from, { body: text });
-  }
-}
-  const banner = document.getElementById('notif-banner');
-  banner.textContent = from + ': ' + text;
-  banner.style.display = 'block';
-  setTimeout(() => banner.style.display = 'none', 4000);
-  if (Notification.permission === 'granted') {
-    new Notification('MyHomie — ' + from, { body: text });
-  }
-}
-
-function getInitials(name) {
-  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
-}
-
-function getChatId(a, b) {
-  return [a, b].sort().join('_');
-}
-
-function formatTime(ts) {
-  if (!ts) return '';
-  const d = new Date(ts);
-  return d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
-}
-
-function loadUsers() {
-  onValue(ref(db, 'users'), snap => {
-    const data = snap.val() || {};
-    const list = document.getElementById('chat-list');
-    list.innerHTML = '';
-    Object.keys(data).forEach(name => {
-      if (name === myName) return;
-      const item = document.createElement('div');
-      item.className = 'chat-item';
-      item.innerHTML = `
-        <div class="avatar">${getInitials(name)}</div>
-        <div class="chat-info">
-          <div class="chat-name">${name}</div>
-          <div class="chat-preview">Tap to chat</div>
-        </div>`;
-      item.onclick = () => openChat(name);
-      list.appendChild(item);
-      list.appendChild(Object.assign(document.createElement('div'), {className: 'divider'}));
-      watchForMessages(name);
+function loadUsers(){
+  onValue(ref(db,"users"),snap=>{
+    const data=snap.val()||{};
+    const cl=document.getElementById("cl");
+    cl.innerHTML="";
+    Object.keys(data).forEach(name=>{
+      if(name===me) return;
+      const d=document.createElement("div");
+      d.className="ci";
+      d.innerHTML='<div class="av">'+ini(name)+'</div><div><div class="cn">'+name+'</div><div class="cp">Tap to chat</div></div>';
+      d.onclick=()=>openChat(name);
+      cl.appendChild(d);
+      cl.appendChild(Object.assign(document.createElement("div"),{className:"div"}));
+      watchMsgs(name);
     });
   });
 }
-
-function watchForMessages(fromName) {
-  const chatId = getChatId(myName, fromName);
-  let initialized = false;
-  onValue(ref(db, 'chats/' + chatId), snap => {
-    const data = snap.val() || {};
-    const msgs = Object.values(data);
-    if (!initialized) {
-      initialized = true;
-      lastMsgCount = msgs.length;
-      return;
-    }
-    if (msgs.length > lastMsgCount) {
-      const last = msgs[msgs.length - 1];
-      if (last.sender !== myName && currentChat !== fromName) {
-        showNotification(fromName, last.text);
-      }
-      lastMsgCount = msgs.length;
+const watched={};
+function watchMsgs(name){
+  if(watched[name]) return;
+  watched[name]=true;
+  let init=false, count=0;
+  onValue(ref(db,"chats/"+cid(me,name)),snap=>{
+    const vals=Object.values(snap.val()||{});
+    if(!init){ init=true; count=vals.length; return; }
+    if(vals.length>count){
+      const last=vals[vals.length-1];
+      if(last.sender!==me && chat!==name) notify(name,last.text);
+      count=vals.length;
     }
   });
 }
-
-window.openChat = function(name) {
-  currentChat = name;
-  document.getElementById('chat-av').textContent = getInitials(name);
-  document.getElementById('chat-name').textContent = name;
-  document.getElementById('page-chat').classList.remove('hidden');
-  const container = document.getElementById('messages');
-  container.innerHTML = '';
-  if (unsubMessages) unsubMessages();
-  const chatId = getChatId(myName, name);
-  unsubMessages = onValue(ref(db, 'chats/' + chatId), snap => {
-    const data = snap.val() || {};
-    container.innerHTML = '';
-    Object.values(data).forEach(msg => {
-      const div = document.createElement('div');
-      div.className = 'msg ' + (msg.sender === myName ? 'me' : 'them');
-      div.innerHTML = `<div class="bubble">${msg.text}</div><span class="msg-time">${formatTime(msg.ts)}</span>`;
-      container.appendChild(div);
+window.openChat=function(name){
+  chat=name;
+  document.getElementById("cav").textContent=ini(name);
+  document.getElementById("ctn").textContent=name;
+  document.getElementById("p2").classList.remove("off");
+  const msgs=document.getElementById("msgs");
+  msgs.innerHTML="";
+  if(unsub) unsub();
+  unsub=onValue(ref(db,"chats/"+cid(me,name)),snap=>{
+    msgs.innerHTML="";
+    Object.values(snap.val()||{}).forEach(msg=>{
+      const d=document.createElement("div");
+      d.className="msg "+(msg.sender===me?"me":"them");
+      d.innerHTML='<div class="bbl">'+msg.text+'</div><span class="mt">'+ft(msg.ts)+'</span>';
+      msgs.appendChild(d);
     });
-    container.scrollTop = container.scrollHeight;
+    msgs.scrollTop=msgs.scrollHeight;
   });
 };
-
-window.goBack = function() {
-  document.getElementById('page-chat').classList.add('hidden');
-  currentChat = '';
-  if (unsubMessages) { unsubMessages(); unsubMessages = null; }
+window.goBack=function(){
+  document.getElementById("p2").classList.add("off");
+  chat="";
+  if(unsub){ unsub(); unsub=null; }
 };
-
-window.sendMessage = function() {
-  const input = document.getElementById('msg-input');
-  const text = input.value.trim();
-  if (!text || !currentChat) return;
-  const chatId = getChatId(myName, currentChat);
-  push(ref(db, 'chats/' + chatId), {
-    sender: myName,
-    text: text,
-    ts: Date.now()
-  });
-  input.value = '';
+window.doSend=function(){
+  const inp=document.getElementById("mi");
+  const text=inp.value.trim();
+  if(!text||!chat) return;
+  push(ref(db,"chats/"+cid(me,chat)),{sender:me,text:text,ts:Date.now()});
+  inp.value="";
 };
 </script>
 </body>
