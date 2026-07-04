@@ -49,7 +49,7 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .nav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:10px;color:#6b7a8d;}
 .ni.on{color:#1fb8a0;}
-.nb{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#131c26;border:1px solid #1fb8a0;border-radius:12px;padding:12px 20px;font-size:14px;color:#e0e6ed;z-index:999;display:none;max-width:300px;text-align:center;}
+.nb{position:fixed;top:0;left:0;right:0;background:#1fb8a0;padding:16px 20px;font-size:15px;color:#0a0f14;font-weight:700;z-index:999;display:none;text-align:center;}
 </style>
 </head>
 <body>
@@ -135,7 +135,7 @@ function start(){
 }
 function ini(n){ return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); }
 function cid(a,b){ return [a,b].sort().join("_"); }
-function ft(ts){ const d=new Date(ts); return d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes(); }
+ function ft(ts){ const d=new Date(ts); return d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes(); }
 function notify(from,text){
   const nb=document.getElementById("nb");
   nb.textContent=from+": "+text;
