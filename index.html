@@ -141,7 +141,7 @@ function notify(from,text){
   nb.textContent=from+": "+text;
   nb.style.display="block";
   setTimeout(()=>nb.style.display="none",4000);
-  try{ const a=new Audio("https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3"); a.volume=0.5; a.play(); }catch(e){}
+  try{ const a=new Audio("https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3"); a.volume=0.6; a.play(); }catch(e){}
   if(Notification.permission==="granted") new Notification("MyHomie - "+from,{body:text});
 }
 function loadUsers(){
