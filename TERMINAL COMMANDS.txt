@@ -1,0 +1,9 @@
+cd ~/myhomie
+git add .
+git commit -m "Add settings page with color picker"
+git push
+
+
+
+
+nano ~/myhomie/index.html
