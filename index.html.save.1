@@ -1,3 +1,4 @@
+k
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +16,6 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .login-input{width:100%;max-width:320px;background:#131c26;border:1px solid #1e2d3d;border-radius:12px;padding:14px 18px;font-size:16px;color:#e0e6ed;outline:none;}
 .login-input:focus{border-color:#1fb8a0;}
 .login-btn{width:100%;max-width:320px;background:transparent;border:1.5px solid #1fb8a0;border-radius:12px;padding:14px;font-size:16px;color:#1fb8a0;cursor:pointer;}
-.login-error{color:#e05555;font-size:13px;display:none;}
 #app{display:none;flex-direction:column;height:100vh;}
 .statusbar{display:flex;justify-content:space-between;padding:10px 20px 4px;background:#0a0f14;}
 .statusbar span{font-size:12px;color:#6b7a8d;}
@@ -59,22 +59,17 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .navitem span{font-size:10px;color:#6b7a8d;}
 .navitem.active svg{stroke:#1fb8a0;}
 .navitem.active span{color:#1fb8a0;}
-.notif-banner{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#131c26;border:1px solid #1fb8a0;border-radius:12px;padding:12px 20px;font-size:14px;color:#e0e6ed;z-index:999;display:none;max-width:300px;text-align:center;}
 </style>
 </head>
 <body>
-
-<div class="notif-banner" id="notif-banner"></div>
 
 <div id="login-screen">
   <div class="login-logo">
     <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
   </div>
   <div class="login-title">MyHomie</div>
-  <div class="login-sub">Enter your name and password</div>
+  <div class="login-sub">Enter your name to start chatting</div>
   <input class="login-input" id="name-input" placeholder="Your name" maxlength="20"/>
-  <input class="login-input" id="pass-input" type="password" placeholder="Password"/>
-  <div class="login-error" id="login-error">Wrong password</div>
   <button class="login-btn" onclick="login()">Let's go</button>
 </div>
 
@@ -122,7 +117,7 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
       <span>Contacts</span>
     </div>
     <div class="navitem">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/></svg>
       <span>Settings</span>
     </div>
   </div>
@@ -145,12 +140,9 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getDatabase(firebaseApp);
 
-const PASSWORD = "homie2024";
-
 let myName = '';
 let currentChat = '';
 let unsubMessages = null;
-let lastMsgCount = 0;
 
 const saved = localStorage.getItem('myhomie_name');
 if (saved) {
@@ -161,16 +153,9 @@ if (saved) {
 }
 
 window.login = function() {
-  const name = document.getElementById('name-input').value.trim();
-  const pass = document.getElementById('pass-input').value.trim();
-  const err = document.getElementById('login-error');
-  if (!name) return;
-  if (pass !== PASSWORD) {
-    err.style.display = 'block';
-    return;
-  }
-  err.style.display = 'none';
-  myName = name;
+  const input = document.getElementById('name-input').value.trim();
+  if (!input) return;
+  myName = input;
   localStorage.setItem('myhomie_name', myName);
   document.getElementById('login-screen').style.display = 'none';
   showApp();
@@ -181,27 +166,10 @@ function showApp() {
   document.getElementById('app').style.display = 'flex';
   set(ref(db, 'users/' + myName), { online: true });
   loadUsers();
-  requestNotificationPermission();
   setInterval(() => {
     const d = new Date();
     document.getElementById('status-time').textContent = d.getHours() + ':' + String(d.getMinutes()).padStart(2,'0');
   }, 1000);
-}
-
-function requestNotificationPermission() {
-  if ('Notification' in window) {
-    Notification.requestPermission();
-  }
-}
-
-function showNotification(from, text) {
-  const banner = document.getElementById('notif-banner');
-  banner.textContent = from + ': ' + text;
-  banner.style.display = 'block';
-  setTimeout(() => banner.style.display = 'none', 4000);
-  if (Notification.permission === 'granted') {
-    new Notification('MyHomie — ' + from, { body: text });
-  }
 }
 
 function getInitials(name) {
@@ -236,29 +204,7 @@ function loadUsers() {
       item.onclick = () => openChat(name);
       list.appendChild(item);
       list.appendChild(Object.assign(document.createElement('div'), {className: 'divider'}));
-      watchForMessages(name);
     });
-  });
-}
-
-function watchForMessages(fromName) {
-  const chatId = getChatId(myName, fromName);
-  let initialized = false;
-  onValue(ref(db, 'chats/' + chatId), snap => {
-    const data = snap.val() || {};
-    const msgs = Object.values(data);
-    if (!initialized) {
-      initialized = true;
-      lastMsgCount = msgs.length;
-      return;
-    }
-    if (msgs.length > lastMsgCount) {
-      const last = msgs[msgs.length - 1];
-      if (last.sender !== myName && currentChat !== fromName) {
-        showNotification(fromName, last.text);
-      }
-      lastMsgCount = msgs.length;
-    }
   });
 }
 
@@ -286,7 +232,6 @@ window.openChat = function(name) {
 
 window.goBack = function() {
   document.getElementById('page-chat').classList.add('hidden');
-  currentChat = '';
   if (unsubMessages) { unsubMessages(); unsubMessages = null; }
 };
 
@@ -294,14 +239,4 @@ window.sendMessage = function() {
   const input = document.getElementById('msg-input');
   const text = input.value.trim();
   if (!text || !currentChat) return;
-  const chatId = getChatId(myName, currentChat);
-  push(ref(db, 'chats/' + chatId), {
-    sender: myName,
-    text: text,
-    ts: Date.now()
-  });
-  input.value = '';
-};
-</script>
-</body>
-</html>
+  const chatId = getChatId(myNa 
