@@ -199,6 +199,17 @@ function showNotification(from, text) {
   banner.textContent = from + ': ' + text;
   banner.style.display = 'block';
   setTimeout(() => banner.style.display = 'none', 4000);
+  const audio = new Audio('https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3');
+  audio.volume = 0.5;
+  audio.play().catch(() => {});
+  if (Notification.permission === 'granted') {
+    new Notification('MyHomie — ' + from, { body: text });
+  }
+}
+  const banner = document.getElementById('notif-banner');
+  banner.textContent = from + ': ' + text;
+  banner.style.display = 'block';
+  setTimeout(() => banner.style.display = 'none', 4000);
   if (Notification.permission === 'granted') {
     new Notification('MyHomie — ' + from, { body: text });
   }
