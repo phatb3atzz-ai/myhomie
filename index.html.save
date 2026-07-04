@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>MyHomie</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;color:#e0e6ed;}
+
+/* Login screen */
+#login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:20px;padding:30px;}
+.login-logo{width:80px;height:80px;border-radius:50%;border:2px solid #1fb8a0;display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
+.login-logo svg{width:40px;height:40px;stroke:#1fb8a0;fill:none;stroke-width:2;}
+.login-title{font-size:28px;font-weight:700;color:#fff;}
+.login-sub{font-size:14px;color:#6b7a8d;text-align:center;}
+.login-input{width:100%;max-width:320px;background:#131c26;border:1px solid #1e2d3d;border-radius:12px;padding:14px 18px;font-size:16px;color:#e0e6ed;outline:none;}
+.login-input:focus{border-color:#1fb8a0;}
+.login-btn{width:100%;max-width:320px;background:transparent;border:1.5px solid #1fb8a0;border-radius:12px;padding:14px;font-size:16px;color:#1fb8a0;cursor:pointer;letter-spacing:0.05em;}
+.login-btn:active{background:#1fb8a015;}
+
+/* Main app */
+#app{display:none;flex-direction:column;height:100vh;}
+
+/* Status bar */
+.statusbar{display:flex;justify-content:space-between;padding:10px 20px 4px;background:#0a0f14;}
+.statusbar span{font-size:12px;color:#6b7a8d;}
+
+/* Screens */
+.screen{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column;}
+.page{position:absolute;inset:0;display:flex;flex-direction:column;background:#0a0f14;transition:transform 0.25s ease;overflow:hidden;}
+.page.hidden{transform:translateX(100%);}
+
+/* Chats list */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;}
+.topbar-title{font-size:22px;font-weight:700;color:#fff;}
+.topbar-icons{display:flex;gap:18px;}
+.topbar-icons svg{width:22px;height:22px;stroke:#1fb8a0;fill:none;stroke-width:2;cursor:pointer;}
+.chat-item{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;transition:background 0.15s;}
+.chat-item:active{background:#131c26;}
+.avatar{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
+.chat-info{flex:1;min-width:0;}
+.chat-name{font-size:16px;font-weight:600;color:#e0e6ed;}
+.chat-preview{font-size:13px;color:#6b7a8d;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chat-meta{text-align:right;}
+.chat-time{font-size:11px;color:#6b7a8d;}
+.unread-badge{background:#1fb8a0;color:#0a0f14;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:4px;margin-left:auto;}
+.divider{height:0.5px;background:#1e2d3d;margin:0 20px;}
+
+/* Chat page */
+.chat-topbar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #1e2d3d;}
+.back-svg{width:22px;height:22px;stroke:#1fb8a0;fill:none;stroke-width:2;cursor:pointer;flex-shrink:0;}
+.chat-av{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
+.chat-topbar-info{flex:1;}
+.chat-topbar-name{font-size:15px;font-weight:600;color:#e0e6ed;}
+.chat-topbar-status{font-size:11px;color:#1fb8a0;}
+.messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
+.msg{max-width:78%;display:flex;flex-direction:column;gap:3px;}
+.msg.me{align-self:flex-end;align-items:flex-end;}
+.msg.them{align-self:flex-start;align-items:flex-start;}
+.bubble{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;}
+.me .bubble{background:#1fb8a020;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
+.them .bubble{background:#131c26;border:1px solid #1e2d3d;color:#e0e6ed;border-bottom-left-radius:4px;}
+.msg-time{font-size:10px;color:#6b7a8d;}
+.date-sep{text-align:center;font-size:11px;color:#6b7a8d;padding:8px 0;}
+.input-bar{display:flex;align-items:center;gap:10px;padding:10px 16px 20px;border-top:0.5px solid #1e2d3d;}
+.msg-input{flex:1;background:#131c26;border:1px solid #1e2d3d;border-radius:22px;padding:10px 16px;font-size:14px;color:#e0e6ed;outline:none;}
+.msg-input:focus{border-color:#1fb8a0;}
+.msg-input::placeholder{color:#6b7a8d;}
+.send-btn{width:40px;height:40px;border-radius:50%;background:#1fb8a0;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:none;}
+.send-btn svg{width:18px;height:18px;stroke:#0a0f14;fill:none;stroke-width:2.5;}
+
+/* Bottom nav */
+.bottomnav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
+.navitem{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;}
+.navitem svg{width:24px;height:24px;stroke:#6b7a8d;fill:none;stroke-width:1.8;}
+.navitem span{font-size:10px;color:#6b7a8d;}
+.navitem.active svg{stroke:#1fb8a0;}
+.navitem.active span{color:#1fb8a0;}
+
+/* Splash */
+#splash{position:fixed;inset:0;background:#0a0f14;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:100;}
+#splash svg{width:60px;height:60px;stroke:#1fb8a0;fill:none;stroke-width:1.5;}
+#splash h1{font-size:26px;font-weight:700;color:#fff;}
+#splash p{font-size:14px;color:#6b7a8d;}
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <h1>MyHomie</h1>
+  <p>Stay connected.</p>
+</div>
+
+<div id="login-screen">
+  <div class="login-logo">
+    <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  </div>
+  <div class="login-title">MyHomie</div>
+  <div class="login-sub">Enter your name to start chatting</div>
+  <input class="login-input" id="name-input" placeholder="Your name (e.g. Nikolay)" maxlength="20"/>
+ <button class="login-btn" onclick="login()">Let's go</button>
+</div>
+
+<div id="app">
+  <div class="statusbar">
+    <span id="status-name">MyHomie</span>
+    <span id="status-time">--:--</span>
+  </div>
+
+  <div class="screen">
+    <!-- Chats list -->
+    <div class="page" id="page-chats">
+      <div class="topbar">
+        <span class="topbar-title">Chats</span>
+        <div class="topbar-icons">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="chat-list"></div>
+    </div>
+
+    <!-- Chat page -->
+    <div class="page hidden" id="page-chat">
+      <div class="chat-topbar">
+        <svg class="back-svg" viewBox="0 0 24 24" onclick="goBack()"><path d="m15 18-6-6 6-6"/></svg>
+        <div class="chat-av" id="chat-av">?</div>
+        <div class="chat-topbar-info">
+          <div class="chat-topbar-name" id="chat-name">...</div>
+          <div class="chat-topbar-status" id="chat-status">online</div>
+        </div>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="input-bar">
+        <input class="msg-input" id="msg-input" placeholder="Message..." onkeydown="handleKey(event)"/>
+        <button class="send-btn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4 20-7z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottomnav">
+    <div class="navitem active">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Chats</span>
+    </div>
+    <div class="navitem">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Contacts</span>
+    </div>
+    <div class="navitem">
+      <svg viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Settings</span>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push, onValue, serverTimestamp, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCmlU9wGKlmOkAnzjFt0-ng1vlQlACr9Ik",
+  authDomain: "buddy-chat-a7aae.firebaseapp.com",
+  databaseURL: "https://buddy-chat-a7aae-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "buddy-chat-a7aae",
+  storageBucket: "buddy-chat-a7aae.firebasestorage.app",
+  messagingSenderId: "806705827259",
+  appId: "1:806705827259:web:a71e9754feaf5751fbc89e"
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getDatabase(firebaseApp);
+
+let myName = '';
+let currentChat = '';
+let unsubscribe = null;
+
+setTimeout(() => {
+  document.getElementById('splash').style.display = 'none';
+  const saved = localStorage.getItem('myhomie_name');
+  if (saved) {
+    myName = saved;
+    showApp();
+  } else {
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+}, 1500);
+
+window.login = function() {
+  const input = document.getElementById('name-input').value.trim();
+  if (!input) return;
+  myName = input;
+  localStorage.setItem('myhomie_name', myName);
+  document.getElementById('login-screen').style.display = 'none';
+  showApp();
+};
+
+function showApp() {
+  document.getElementById('status-name').textContent = myName;
+  document.getElementById('app').style.display = 'flex';
+  loadContacts();
+  setInterval(updateClock, 1000);
+  updateClock();
+}
+
+function updateClock() {
+  const d = new Date();
+  const h = d.getHours(), m = d.getMinutes();
+  document.getElementById('status-time').textContent = h + ':' + (m < 10 ? '0' + m : m);
+}
+
+function getInitials(name) {
+  return name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function getChatId(a, b) {
+  return [a, b].sort().join('_');
+}
+
+function loadContacts() {
+  const usersRef = ref(db, 'users');
+  onValue(usersRef, snap => {
+    const data = snap.val() || {};
+    const list = document.getElementById('chat-list');
+    list.innerHTML = '';
+    Object.keys(data).forEach(name => {
+      if (name === myName) return;
+      const chatId = getChatId(myName, name);
+      const msgRef = ref(db, 'chats/' + chatId + '/messages');
+      get(msgRef).then(msgSnap => {
+        const msgs = msgSnap.val() || {};
+        const keys = Object.keys(msgs);
+        const last = keys.length ? msgs[keys[keys.length - 1]] : null;
+        const item = document.createElement('div');
+        item.className = 'chat-item';
+        item.innerHTML = `
+          <div class="avatar">${getInitials(name)}</div>
+          <div class="chat-info">
+            <div class="chat-name">${name}</div>
+            <div class="chat-preview">${last ? last.text : 'Start chatting'}</div>
+          </div>
+          <div class="chat-meta">
+            <div class="chat-time">${last ? formatTime(last.ts) : ''}</div>
+          </div>`;
+        item.onclick = () => openChat(name);
+        list.appendChild(item);
+        const div = document.createElement('div');
+        div.className = 'divider';
+        list.appendChild(div);
+      });
+    });
+    registerUser();
+  });
+}
+
+function registerUser() {
+  import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js").then(m => {
+    m.set(ref(db, 'users/' + myName), { online: true, joined: Date.now() });
+  });
+}
+        
+      });
+    }
+  });
+}
+
+function formatTime(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+ consth = d.getHours(), m = d.getMinutes();
+  return h + ':' + (m < 10 ? '0' + m : m);
+}
+
+window.openChat = function(name) {
+  currentChat = name;
+  document.getElementById('chat-av').textContent = getInitials(name);
+  document.getElementById('chat-name').textContent = name;
+  document.getElementById('chat-status').textContent = 'online';
+  document.getElementById('page-chat').classList.remove('hidden');
+  document.getElementById('messages').innerHTML = '';
+  const chatId = getChatId(myName, name);
+  const msgRef = ref(db, 'chats/' + chatId + '/messages');
+  if (unsubscribe) unsubscribe();
+  unsubscribe = onValue(msgRef, snap => {
+    const data = snap.val() || {};
+    const container = document.getElementById('messages');
+    container.innerHTML = '';
+    Object.values(data).forEach(msg => {
+      const div = document.createElement('div');
+      div.className = 'msg ' + (msg.sender === myName ? 'me' : 'them');
+      div.innerHTML = `<div class="bubble">${msg.text}</div><span class="msg-time">${formatTime(msg.ts)}</span>`;
+      container.appendChild(div);
+    });
+    container.scrollTop = container.scrollHeight;
+  });
+};
+
+window.goBack = function() {
+  document.getElementById('page-chat').classList.add('hidden');
+  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
+};
+
+window.sendMessage = function() {
+  const input = document.getElementById('msg-input');
+  const text = input.value.trim();
+  if (!text || !currentChat) return;
+  const chatId = getChatId(myName, currentChat);
+  push(ref(db, 'chats/' + chatId + '/messages'), {
+    sender: myName,
+    text: text,
+    ts: Date.now()
+  });
+  input.value = '';
+};
+
+window.handleKey = function(e) {
+  if (e.key === 'Enter') window.sendMessage();
+};
+</script>
+</body>
+</html>
