@@ -194,7 +194,7 @@ function applyColor(val){
   document.querySelectorAll("#sbtn").forEach(el=>el.style.background=val);
   document.querySelectorAll(".inp:focus,.minp:focus").forEach(el=>el.style.borderColor=val);
   document.querySelectorAll(".me .bbl").forEach(el=>{
-    el.style.background=val+"30";
+    el.style.background=val+"40";
     el.style.borderColor=val+"50";
   });
 }
@@ -245,7 +245,7 @@ window.openChat=function(name){
     Object.values(snap.val()||{}).forEach(msg=>{
       const d=document.createElement("div");
       d.className="msg "+(msg.sender===me?"me":"them");
-      const bblStyle=msg.sender===me?'style="background:'+accentColor+'20;border-color:'+accentColor+'50"':'';
+      const bblStyle=msg.sender===me?'style="background:'+accentColor+'40;border-color:'+accentColor+'50"':'';
       d.innerHTML='<div class="bbl" '+bblStyle+'>'+msg.text+'</div><span class="mt">'+ft(msg.ts)+'</span>';
       msgs.appendChild(d);
     });
