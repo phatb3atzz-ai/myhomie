@@ -56,8 +56,8 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .srow{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:0.5px solid #1e2d3d;cursor:pointer;}
 .srow-label{font-size:15px;color:#e0e6ed;}
 .srow-sub{font-size:12px;color:#6b7a8d;margin-top:2px;}
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,48px);gap:16px;padding:20px;} 
-.color-dot{width:48px;height:48px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border 0.15s;}
+.color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:20px;}
+.color-dot{width:100%;aspect-ratio:1;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border 0.15s;}
 .color-dot.selected{border-color:#fff;}
 .settings-info{padding:20px;font-size:13px;color:#6b7a8d;}
 .settings-info span{color:#e0e6ed;}
@@ -124,6 +124,14 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
       </div>
       <div class="color-grid" id="cgrid"></div>
       <div class="div"></div>
+      <div class="srow">
+        <div>
+          <div class="srow-label">Chat background</div>
+          <div class="srow-sub">Customize the background behind your messages</div>
+        </div>
+      </div>
+      <div class="color-grid" id="bggrid"></div>
+      <div class="div"></div>
       <div class="settings-info">Logged in as: <span id="set-name"></span></div>
       <div style="padding:0 20px;">
         <button class="btn" onclick="doLogout()">Log out</button>
@@ -157,10 +165,21 @@ const COLORS = [
   {name:"Blue",val:"#1a7fd4"},
   {name:"Purple",val:"#8b5cf6"},
   {name:"Pink",val:"#e879a0"},
-  {name:"Blueberry",val:"#6b67ab"},
+  {name:"Orange",val:"#f59e0b"},
   {name:"Red",val:"#ef4444"},
   {name:"Green",val:"#22c55e"},
-  {name:"Dark",val:"#5a37ab"},
+  {name:"Gold",val:"#eab308"},
+];
+const BG_COLORS = [
+  {name:"Default",val:"#0a0f14"},
+  {name:"Midnight",val:"#0d1321"},
+  {name:"Charcoal",val:"#16181d"},
+  {name:"Deep Teal",val:"#0a1f1c"},
+  {name:"Deep Purple",val:"#1a1230"},
+  {name:"Light Purple",val:"#302944"},
+  {name:"Deep Blue",val:"#0c1a2e"},
+  {name:"Wine",val:"#1f0f16"},
+  {name:"Forest",val:"#0f1a12"},
 ];
 let me="", chat="", unsub=null, unsubSeen=null, accentColor="#1fb8a0";
 const watched={};
@@ -186,6 +205,8 @@ function start(){
   if("Notification" in window) Notification.requestPermission();
   const sc=localStorage.getItem("mhc");
   if(sc){ accentColor=sc; }
+  const sbg=localStorage.getItem("mhbg");
+  applyBg(sbg||"#0a0f14");
   loadUsers();
   setInterval(()=>{
     const d=new Date();
@@ -214,6 +235,10 @@ function notify(from,text){
 
 function applyColor(val){
   accentColor=val;
+}
+
+function applyBg(val){
+  document.getElementById("msgs").style.background=val;
 }
 
 function loadUsers(){
@@ -328,9 +353,10 @@ window.showPage=function(n){
     el.classList.toggle("on",i+1===n);
     el.style.color=i+1===n?accentColor:"#6b7a8d";
   });
-  if(n===3){
+if(n===3){
     document.getElementById("set-name").textContent=me;
     loadColorGrid();
+    loadBgGrid();
     loadProfilePic();
   }
 };
@@ -387,6 +413,24 @@ function loadColorGrid(){
       localStorage.setItem("mhc",c.val);
       applyColor(c.val);
       loadColorGrid();
+    };
+    grid.appendChild(d);
+  });
+}
+
+function loadBgGrid(){
+  const grid=document.getElementById("bggrid");
+  grid.innerHTML="";
+  const current=localStorage.getItem("mhbg")||"#0a0f14";
+  BG_COLORS.forEach(c=>{
+    const d=document.createElement("div");
+    d.className="color-dot"+(c.val===current?" selected":"");
+    d.style.background=c.val;
+    d.title=c.name;
+    d.onclick=()=>{
+      localStorage.setItem("mhbg",c.val);
+      applyBg(c.val);
+      loadBgGrid();
     };
     grid.appendChild(d);
   });
