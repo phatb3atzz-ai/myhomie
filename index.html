@@ -1,445 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyHomie</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;color:#e0e6ed;}
-#login{display:none;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;padding:30px;}
-.ltitle{font-size:28px;font-weight:700;color:#fff;}
-.lsub{font-size:14px;color:#6b7a8d;}
-.inp{width:100%;max-width:320px;background:#131c26;border:1px solid #1e2d3d;border-radius:12px;padding:14px 18px;font-size:16px;color:#e0e6ed;outline:none;}
-.inp:focus{border-color:#1fb8a0;}
-.btn{width:100%;max-width:320px;background:transparent;border:1.5px solid #1fb8a0;border-radius:12px;padding:14px;font-size:16px;color:#1fb8a0;cursor:pointer;}
-.err{color:#e05555;font-size:13px;display:none;}
-#app{display:none;flex-direction:column;height:100vh;}
-.sb{display:flex;justify-content:space-between;padding:10px 20px 4px;}
-.sb span{font-size:12px;color:#6b7a8d;}
-.screen{flex:1;overflow:hidden;position:relative;}
-.page{position:absolute;inset:0;display:flex;flex-direction:column;background:#0a0f14;transition:transform 0.25s;overflow:hidden;}
-.page.off{transform:translateX(100%);}
-.tb{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;}
-.tbtitle{font-size:22px;font-weight:700;color:#fff;}
-.ci{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
-.av{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;overflow:hidden;}
-.av img{width:100%;height:100%;object-fit:cover;}
-.cn{font-size:16px;font-weight:600;color:#e0e6ed;}
-.cp{font-size:13px;color:#6b7a8d;margin-top:3px;}
-.div{height:0.5px;background:#1e2d3d;margin:0 20px;}
-.ctb{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #1e2d3d;}
-.bk{font-size:22px;color:#1fb8a0;cursor:pointer;font-weight:300;}
-.cav{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;overflow:hidden;}
-.cav img{width:100%;height:100%;object-fit:cover;}
-.cti{flex:1;}
-.ctn{font-size:15px;font-weight:600;color:#e0e6ed;}
-.cts{font-size:11px;color:#1fb8a0;}
-.msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:8px;}
-.msg{max-width:78%;display:flex;flex-direction:column;gap:3px;}
-.msg.me{align-self:flex-end;align-items:flex-end;}
-.msg.them{align-self:flex-start;align-items:flex-start;}
-.bbl{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;}
-.me .bbl{background:#1fb8a040;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
-.them .bbl{background:#131c26;border:1px solid #1e2d3d;color:#e0e6ed;border-bottom-left-radius:4px;}
-.mt{font-size:10px;color:#6b7a8d;display:flex;align-items:center;gap:3px;}
-.seen{font-size:12px;color:#1fb8a0;}
-.ibar{display:flex;align-items:center;gap:10px;padding:10px 16px 20px;border-top:0.5px solid #1e2d3d;}
-.minp{flex:1;background:#131c26;border:1px solid #1e2d3d;border-radius:22px;padding:10px 16px;font-size:14px;color:#e0e6ed;outline:none;}
-.minp:focus{border-color:#1fb8a0;}
-.minp::placeholder{color:#6b7a8d;}
-.sbtn{width:40px;height:40px;border-radius:50%;background:#1fb8a0;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:18px;color:#0a0f14;}
-.nav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
-.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:10px;color:#6b7a8d;padding:4px 0;}
-.ni.on{color:#1fb8a0;}
-.nb{position:fixed;top:0;left:0;right:0;background:#1fb8a0;padding:16px 20px;font-size:15px;color:#0a0f14;font-weight:700;z-index:999;display:none;text-align:center;}
-.srow{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:0.5px solid #1e2d3d;cursor:pointer;}
-.srow-label{font-size:15px;color:#e0e6ed;}
-.srow-sub{font-size:12px;color:#6b7a8d;margin-top:2px;}
-.color-grid{display:grid;grid-template-columns:repeat(auto-fill,48px);gap:16px;padding:20px;}
-.color-dot{width:48px;height:48px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border 0.15s;}
-.color-dot.selected{border-color:#fff;}
-.settings-info{padding:20px;font-size:13px;color:#6b7a8d;}
-.settings-info span{color:#e0e6ed;}
-.profile-pic-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px;}
-.profile-pic-large{width:90px;height:90px;border-radius:50%;background:#131c26;border:2px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#1fb8a0;overflow:hidden;cursor:pointer;}
-.profile-pic-large img{width:100%;height:100%;object-fit:cover;}
-.profile-pic-hint{font-size:12px;color:#6b7a8d;}
-#pic-input{display:none;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Radar Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+        }
+        h1 {
+            color: #f0f6fc;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #8b949e;
+            font-size: 0.95rem;
+            margin-top: 0;
+        }
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+        }
+        .stat-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+        .stat-label {
+            color: #8b949e;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .stat-value {
+            color: #f0f6fc;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .video-panel {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        .video-stream {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .log-panel {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .log-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #f0f6fc;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 8px;
+        }
+        .log-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #21262d;
+        }
+        .log-left {
+            display: flex;
+            flex-direction: column;
+        }
+        .log-time {
+            font-size: 0.75rem;
+            color: #8b949e;
+        }
+        .log-plate {
+            font-weight: bold;
+            color: #58a6ff;
+            margin-top: 3px;
+        }
+        .log-speed {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ff7b72;
+        }
+    </style>
 </head>
 <body>
-<div class="nb" id="nb"></div>
-<div id="login">
-  <div class="ltitle">MyHomie</div>
-  <div class="lsub">Enter your name and password</div>
-  <input class="inp" id="ni" placeholder="Your name" maxlength="20"/>
-  <input class="inp" id="pi" type="password" placeholder="Password"/>
-  <div class="err" id="er">Wrong password</div>
-  <button class="btn" onclick="doLogin()">Let's go</button>
-</div>
-<div id="app">
-  <div class="sb">
-    <span id="sn">MyHomie</span>
-    <span id="st">--:--</span>
-  </div>
-  <div class="screen">
 
-    <div class="page" id="p1">
-      <div class="tb"><span class="tbtitle">Chats</span></div>
-      <div class="div"></div>
-      <div id="cl"></div>
+    <div class="header">
+        <h1>Speed Radar Live Dashboard</h1>
+        <p class="subtitle">Real-time trip-wire computer vision engine tracking speeds and plates locally.</p>
     </div>
 
-    <div class="page off" id="p2">
-      <div class="ctb">
-        <span class="bk" onclick="goBack()">&#8592;</span>
-        <div class="cav" id="cav"></div>
-        <div class="cti">
-          <div class="ctn" id="ctn">...</div>
-          <div class="cts" id="cts">online</div>
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-label">Vehicles Tracked</div>
+            <div id="stat-tracked" class="stat-value">0</div>
         </div>
-      </div>
-      <div class="msgs" id="msgs"></div>
-      <div class="ibar">
-        <input class="minp" id="mi" placeholder="Message..." onkeydown="if(event.key==='Enter')doSend()"/>
-        <button class="sbtn" id="sbtn" onclick="doSend()">&#10148;</button>
-      </div>
+        <div class="stat-card">
+            <div class="stat-label">Over Limit</div>
+            <div id="stat-over" class="stat-value" style="color: #ff7b72;">0</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Avg Speed</div>
+            <div id="stat-avg" class="stat-value">0 km/h</div>
+        </div>
     </div>
 
-    <div class="page off" id="p3">
-      <div class="tb"><span class="tbtitle">Settings</span></div>
-      <div class="div"></div>
-      <div class="profile-pic-wrap">
-        <div class="profile-pic-large" id="pp-large" onclick="document.getElementById('pic-input').click()"></div>
-        <div class="profile-pic-hint">Tap to change profile picture</div>
-        <input type="file" id="pic-input" accept="image/*" onchange="handlePicChange(event)"/>
-      </div>
-      <div class="div"></div>
-      <div class="srow">
-        <div>
-          <div class="srow-label">Chat color</div>
-          <div class="srow-sub">Customize your message bubble color</div>
+    <div class="main-layout">
+        <div class="video-panel">
+            <img class="video-stream" src="/video_feed" alt="Live Radar Feed">
         </div>
-      </div>
-      <div class="color-grid" id="cgrid"></div>
-      <div class="div"></div>
-      <div class="srow">
-        <div>
-          <div class="srow-label">Chat background</div>
-          <div class="srow-sub">Customize the background behind your messages</div>
+
+        <div class="log-panel">
+            <div class="log-header">Recent Detections</div>
+            <div id="log-list"></div>
         </div>
-      </div>
-      <div class="color-grid" id="bggrid"></div>
-      <div class="div"></div>
-      <div class="settings-info">Logged in as: <span id="set-name"></span></div>
-      <div style="padding:0 20px;">
-        <button class="btn" onclick="doLogout()">Log out</button>
-      </div>
     </div>
 
-  </div>
-  <div class="nav">
-    <div class="ni on" id="nav1" onclick="showPage(1)">&#128172;<br>Chats</div>
-    <div class="ni" id="nav2">&#128100;<br>Contacts</div>
-    <div class="ni" id="nav3" onclick="showPage(3)">&#9881;<br>Settings</div>
-  </div>
-</div>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-const cfg = {
-  apiKey:"AIzaSyCmlU9wGKlmOkAnzjFt0-ng1vlQlACr9Ik",
-  authDomain:"buddy-chat-a7aae.firebaseapp.com",
-  databaseURL:"https://buddy-chat-a7aae-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId:"buddy-chat-a7aae",
-  storageBucket:"buddy-chat-a7aae.firebasestorage.app",
-  messagingSenderId:"806705827259",
-  appId:"1:806705827259:web:a71e9754feaf5751fbc89e"
-};
-const app = initializeApp(cfg);
-const db = getDatabase(app);
-const PASS = "homie2024";
-const COLORS = [
-  {name:"Teal",val:"#1fb8a0"},
-  {name:"Blue",val:"#1a7fd4"},
-  {name:"Purple",val:"#8b5cf6"},
-  {name:"Pink",val:"#e879a0"},
-  {name:"Orange",val:"#f59e0b"},
-  {name:"Red",val:"#ef4444"},
-  {name:"Green",val:"#22c55e"},
-  {name:"Gold",val:"#eab308"},
-];
-const BG_COLORS = [
-  {name:"Default",val:"#0a0f14"},
-  {name:"Midnight",val:"#0d1321"},
-  {name:"Charcoal",val:"#16181d"},
-  {name:"Deep Teal",val:"#0a1f1c"},
-  {name:"Deep Purple",val:"#1a1230"},
-  {name:"Light Purple",val:"#302944"},
-  {name:"Deep Blue",val:"#0c1a2e"},
-  {name:"Wine",val:"#1f0f16"},
-  {name:"Forest",val:"#0f1a12"},
-];
-let me="", chat="", unsub=null, unsubSeen=null, accentColor="#1fb8a0";
-const watched={};
+    <script>
+        async function updateDashboard() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
 
-const saved=localStorage.getItem("mhn");
-if(saved){ me=saved; start(); } else { document.getElementById("login").style.display="flex"; }
+                document.getElementById('stat-tracked').innerText = data.total_tracked;
+                document.getElementById('stat-over').innerText = data.over_limit;
+                document.getElementById('stat-avg').innerText = data.avg_speed + " km/h";
 
-window.doLogin=function(){
-  const n=document.getElementById("ni").value.trim();
-  const p=document.getElementById("pi").value.trim();
-  if(!n) return;
-  if(p!==PASS){ document.getElementById("er").style.display="block"; return; }
-  me=n; localStorage.setItem("mhn",me);
-  document.getElementById("login").style.display="none";
-  start();
-};
+                const logList = document.getElementById('log-list');
+                logList.innerHTML = '';
 
-function start(){
-  document.getElementById("sn").textContent=me;
-  document.getElementById("app").style.display="flex";
-  set(ref(db,"users/"+me+"/online"),true);
-  set(ref(db,"users/"+me+"/lastSeen"),Date.now());
-  if("Notification" in window) Notification.requestPermission();
-  const sc=localStorage.getItem("mhc");
-  if(sc){ accentColor=sc; }
-  const sbg=localStorage.getItem("mhbg");
-  applyBg(sbg||"#0a0f14");
-  loadUsers();
-  setInterval(()=>{
-    const d=new Date();
-    document.getElementById("st").textContent=d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes();
-  },1000);
-}
+                if (data.recent.length === 0) {
+                    logList.innerHTML = '<div style="color: #8b949e; font-size: 0.9rem;">No detections yet...</div>';
+                    return;
+                }
 
-function ini(n){ return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); }
-function cid(a,b){ return [a,b].sort().join("_"); }
-function ft(ts){ const d=new Date(ts); return d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes(); }
+                data.recent.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'log-item';
+                    div.innerHTML = `
+                        <div class="log-left">
+                            <span class="log-time">${item.time}</span>
+                            <span class="log-plate">Plate: ${item.plate}</span>
+                        </div>
+                        <div class="log-speed">${item.speed}</div>
+                    `;
+                    logList.appendChild(div);
+                });
+            } catch (err) {
+                console.error("Error updating dashboard:", err);
+            }
+        }
 
-function avatarHtml(pic, name, color){
-  if(pic) return '<img src="'+pic+'" alt=""/>';
-  return '<span style="color:'+color+'">'+ini(name)+'</span>';
-}
-
-function notify(from,text){
-  const nb=document.getElementById("nb");
-  nb.textContent=from+": "+text;
-  nb.style.background=accentColor;
-  nb.style.display="block";
-  setTimeout(()=>nb.style.display="none",4000);
-  try{ const a=new Audio("https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3"); a.volume=0.6; a.play(); }catch(e){}
-  if(Notification.permission==="granted") new Notification("MyHomie - "+from,{body:text});
-}
-
-function applyColor(val){
-  accentColor=val;
-}
-
-function applyBg(val){
-  document.getElementById("msgs").style.background=val;
-}
-
-function loadUsers(){
-  onValue(ref(db,"users"),snap=>{
-    const data=snap.val()||{};
-    const cl=document.getElementById("cl");
-    cl.innerHTML="";
-    Object.keys(data).forEach(name=>{
-      if(name===me) return;
-      const user=data[name]||{};
-      const pic=user.pic||"";
-      const d=document.createElement("div");
-      d.className="ci";
-      d.innerHTML=`<div class="av" style="border-color:${accentColor}">${avatarHtml(pic,name,accentColor)}</div><div><div class="cn">${name}</div><div class="cp">Tap to chat</div></div>`;
-      d.onclick=()=>openChat(name, pic);
-      cl.appendChild(d);
-      cl.appendChild(Object.assign(document.createElement("div"),{className:"div"}));
-      watchMsgs(name);
-    });
-  });
-}
-
-function watchMsgs(name){
-  if(watched[name]) return;
-  watched[name]=true;
-  let init=false, count=0;
-  onValue(ref(db,"chats/"+cid(me,name)),snap=>{
-    const vals=Object.values(snap.val()||{});
-    if(!init){ init=true; count=vals.length; return; }
-    if(vals.length>count){
-      const last=vals[vals.length-1];
-      if(last.sender!==me && chat!==name) notify(name,last.text);
-      count=vals.length;
-    }
-  });
-}
-
-window.openChat=function(name, pic){
-  chat=name;
-  const cavEl=document.getElementById("cav");
-  cavEl.style.borderColor=accentColor;
-  cavEl.innerHTML=avatarHtml(pic||"",name,accentColor);
-  document.getElementById("ctn").textContent=name;
-  document.getElementById("cts").style.color=accentColor;
-  document.getElementById("p2").classList.remove("off");
-  const msgs=document.getElementById("msgs");
-  msgs.innerHTML="";
-  if(unsub) unsub();
-  if(unsubSeen) unsubSeen();
-
-  const chatId=cid(me,name);
-
-  set(ref(db,"seen/"+chatId+"/"+me),Date.now());
-
-  let chatPic="";
-  get(ref(db,"users/"+name+"/pic")).then(s=>{ chatPic=s.val()||""; });
-
-  unsubSeen=onValue(ref(db,"seen/"+chatId+"/"+name),(snap)=>{
-    const seenTs=snap.val()||0;
-    document.querySelectorAll(".msg.me .seen-tick").forEach(el=>{
-      const msgTs=parseInt(el.dataset.ts||"0");
-      if(seenTs>=msgTs){
-        el.textContent="✓✓";
-        el.style.color=accentColor;
-      } else {
-        el.textContent="✓";
-        el.style.color="#6b7a8d";
-      }
-    });
-  });
-
-  unsub=onValue(ref(db,"chats/"+chatId),snap=>{
-    const seenRef=ref(db,"seen/"+chatId+"/"+name);
-    get(seenRef).then(seenSnap=>{
-      const seenTs=seenSnap.val()||0;
-      msgs.innerHTML="";
-      Object.values(snap.val()||{}).forEach(msg=>{
-        const d=document.createElement("div");
-        const isMe=msg.sender===me;
-        d.className="msg "+(isMe?"me":"them");
-        const bblStyle=isMe?`style="background:${accentColor}40;border-color:${accentColor}50"`:"";
-        const tick=isMe?`<span class="seen-tick" data-ts="${msg.ts}" style="color:${seenTs>=msg.ts?accentColor:'#6b7a8d'}">${seenTs>=msg.ts?"✓✓":"✓"}</span>`:"";
-        d.innerHTML=`<div class="bbl" ${bblStyle}>${msg.text}</div><span class="mt">${ft(msg.ts)} ${tick}</span>`;
-        msgs.appendChild(d);
-      });
-      msgs.scrollTop=msgs.scrollHeight;
-      set(ref(db,"seen/"+chatId+"/"+me),Date.now());
-    });
-  });
-};
-
-window.goBack=function(){
-  document.getElementById("p2").classList.add("off");
-  chat="";
-  if(unsub){ unsub(); unsub=null; }
-  if(unsubSeen){ unsubSeen(); unsubSeen=null; }
-};
-
-window.doSend=function(){
-  const inp=document.getElementById("mi");
-  const text=inp.value.trim();
-  if(!text||!chat) return;
-  push(ref(db,"chats/"+cid(me,chat)),{sender:me,text:text,ts:Date.now()});
-  inp.value="";
-};
-
-window.showPage=function(n){
-  document.getElementById("p1").classList.toggle("off",n!==1);
-  document.getElementById("p3").classList.toggle("off",n!==3);
-  ["nav1","nav2","nav3"].forEach((id,i)=>{
-    const el=document.getElementById(id);
-    el.classList.toggle("on",i+1===n);
-    el.style.color=i+1===n?accentColor:"#6b7a8d";
-  });
-if(n===3){
-    document.getElementById("set-name").textContent=me;
-    loadColorGrid();
-    loadBgGrid();
-    loadProfilePic();
-  }
-};
-
-function loadProfilePic(){
-  const ppEl=document.getElementById("pp-large");
-  get(ref(db,"users/"+me+"/pic")).then(snap=>{
-    const pic=snap.val();
-    if(pic){
-      ppEl.innerHTML='<img src="'+pic+'" alt=""/>';
-    } else {
-      ppEl.style.color=accentColor;
-      ppEl.style.borderColor=accentColor;
-      ppEl.innerHTML='<span>'+ini(me)+'</span>';
-    }
-  });
-}
-
-window.handlePicChange=function(e){
-  const file=e.target.files[0];
-  if(!file) return;
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    const img=new Image();
-    img.onload=function(){
-      const canvas=document.createElement("canvas");
-      const size=150;
-      canvas.width=size; canvas.height=size;
-      const ctx=canvas.getContext("2d");
-      const min=Math.min(img.width,img.height);
-      const sx=(img.width-min)/2, sy=(img.height-min)/2;
-      ctx.drawImage(img,sx,sy,min,min,0,0,size,size);
-      const b64=canvas.toDataURL("image/jpeg",0.6);
-      set(ref(db,"users/"+me+"/pic"),b64).then(()=>{
-        loadProfilePic();
-        loadUsers();
-      });
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-};
-
-function loadColorGrid(){
-  const grid=document.getElementById("cgrid");
-  grid.innerHTML="";
-  const current=localStorage.getItem("mhc")||"#1fb8a0";
-  COLORS.forEach(c=>{
-    const d=document.createElement("div");
-    d.className="color-dot"+(c.val===current?" selected":"");
-    d.style.background=c.val;
-    d.title=c.name;
-    d.onclick=()=>{
-      localStorage.setItem("mhc",c.val);
-      applyColor(c.val);
-      loadColorGrid();
-    };
-    grid.appendChild(d);
-  });
-}
-
-function loadBgGrid(){
-  const grid=document.getElementById("bggrid");
-  grid.innerHTML="";
-  const current=localStorage.getItem("mhbg")||"#0a0f14";
-  BG_COLORS.forEach(c=>{
-    const d=document.createElement("div");
-    d.className="color-dot"+(c.val===current?" selected":"");
-    d.style.background=c.val;
-    d.title=c.name;
-    d.onclick=()=>{
-      localStorage.setItem("mhbg",c.val);
-      applyBg(c.val);
-      loadBgGrid();
-    };
-    grid.appendChild(d);
-  });
-}
-
-window.doLogout=function(){
-  localStorage.clear();
-  location.reload();
-};
-</script>
+        setInterval(updateDashboard, 1000);
+        updateDashboard();
+    </script>
 </body>
 </html>
