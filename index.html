@@ -23,15 +23,13 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .tb{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 8px;}
 .tbtitle{font-size:22px;font-weight:700;color:#fff;}
 .ci{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;}
-.av{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;overflow:hidden;}
-.av img{width:100%;height:100%;object-fit:cover;}
+.av{width:50px;height:50px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
 .cn{font-size:16px;font-weight:600;color:#e0e6ed;}
 .cp{font-size:13px;color:#6b7a8d;margin-top:3px;}
 .div{height:0.5px;background:#1e2d3d;margin:0 20px;}
 .ctb{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #1e2d3d;}
 .bk{font-size:22px;color:#1fb8a0;cursor:pointer;font-weight:300;}
-.cav{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;overflow:hidden;}
-.cav img{width:100%;height:100%;object-fit:cover;}
+.cav{width:38px;height:38px;border-radius:50%;background:#131c26;border:1.5px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#1fb8a0;flex-shrink:0;}
 .cti{flex:1;}
 .ctn{font-size:15px;font-weight:600;color:#e0e6ed;}
 .cts{font-size:11px;color:#1fb8a0;}
@@ -40,10 +38,9 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .msg.me{align-self:flex-end;align-items:flex-end;}
 .msg.them{align-self:flex-start;align-items:flex-start;}
 .bbl{padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.5;}
-.me .bbl{background:#1fb8a040;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
+.me .bbl{background:#1fb8a020;border:1px solid #1fb8a050;color:#e0e6ed;border-bottom-right-radius:4px;}
 .them .bbl{background:#131c26;border:1px solid #1e2d3d;color:#e0e6ed;border-bottom-left-radius:4px;}
-.mt{font-size:10px;color:#6b7a8d;display:flex;align-items:center;gap:3px;}
-.seen{font-size:12px;color:#1fb8a0;}
+.mt{font-size:10px;color:#6b7a8d;}
 .ibar{display:flex;align-items:center;gap:10px;padding:10px 16px 20px;border-top:0.5px solid #1e2d3d;}
 .minp{flex:1;background:#131c26;border:1px solid #1e2d3d;border-radius:22px;padding:10px 16px;font-size:14px;color:#e0e6ed;outline:none;}
 .minp:focus{border-color:#1fb8a0;}
@@ -51,21 +48,10 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 .sbtn{width:40px;height:40px;border-radius:50%;background:#1fb8a0;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:18px;color:#0a0f14;}
 .nav{display:flex;background:#0a0f14;border-top:0.5px solid #1e2d3d;padding:8px 0 18px;}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;font-size:10px;color:#6b7a8d;padding:4px 0;}
-.ni.on{color:#1fb8a0;}
-.nb{position:fixed;top:0;left:0;right:0;background:#1fb8a0;padding:16px 20px;font-size:15px;color:#0a0f14;font-weight:700;z-index:999;display:none;text-align:center;}
-.srow{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:0.5px solid #1e2d3d;cursor:pointer;}
-.srow-label{font-size:15px;color:#e0e6ed;}
-.srow-sub{font-size:12px;color:#6b7a8d;margin-top:2px;}
-.color-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:20px;}
-.color-dot{width:100%;aspect-ratio:1;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:border 0.15s;}
+.ni.on{color:#1fb8a0 rder:3px solid transparent;transition:border 0.15s;}
 .color-dot.selected{border-color:#fff;}
 .settings-info{padding:20px;font-size:13px;color:#6b7a8d;}
 .settings-info span{color:#e0e6ed;}
-.profile-pic-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px;}
-.profile-pic-large{width:90px;height:90px;border-radius:50%;background:#131c26;border:2px solid #1fb8a0;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#1fb8a0;overflow:hidden;cursor:pointer;}
-.profile-pic-large img{width:100%;height:100%;object-fit:cover;}
-.profile-pic-hint{font-size:12px;color:#6b7a8d;}
-#pic-input{display:none;}
 </style>
 </head>
 <body>
@@ -94,10 +80,10 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
     <div class="page off" id="p2">
       <div class="ctb">
         <span class="bk" onclick="goBack()">&#8592;</span>
-        <div class="cav" id="cav"></div>
+        <div class="cav" id="cav">?</div>
         <div class="cti">
           <div class="ctn" id="ctn">...</div>
-          <div class="cts" id="cts">online</div>
+          <div class="cts">online</div>
         </div>
       </div>
       <div class="msgs" id="msgs"></div>
@@ -109,12 +95,6 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 
     <div class="page off" id="p3">
       <div class="tb"><span class="tbtitle">Settings</span></div>
-      <div class="div"></div>
-      <div class="profile-pic-wrap">
-        <div class="profile-pic-large" id="pp-large" onclick="document.getElementById('pic-input').click()"></div>
-        <div class="profile-pic-hint">Tap to change profile picture</div>
-        <input type="file" id="pic-input" accept="image/*" onchange="handlePicChange(event)"/>
-      </div>
       <div class="div"></div>
       <div class="srow">
         <div>
@@ -139,7 +119,7 @@ body{background:#0a0f14;font-family:sans-serif;height:100vh;overflow:hidden;colo
 </div>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, push, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const cfg = {
   apiKey:"AIzaSyCmlU9wGKlmOkAnzjFt0-ng1vlQlACr9Ik",
   authDomain:"buddy-chat-a7aae.firebaseapp.com",
@@ -151,10 +131,10 @@ const cfg = {
 };
 const app = initializeApp(cfg);
 const db = getDatabase(app);
-const PASS = "Tr33house!92kx"";
+const PASS = "Tr33house!92kx";
 const COLORS = [
   {name:"Teal",val:"#1fb8a0"},
-  {name:"Blue",val:"#1a7fd4"},
+  {name:"Blueprint",val:"#1B6EF3",gradient:"linear-gradient(135deg,#1B6EF3,#7B3FE4)"},
   {name:"Purple",val:"#8b5cf6"},
   {name:"Pink",val:"#e879a0"},
   {name:"Orange",val:"#f59e0b"},
@@ -162,12 +142,10 @@ const COLORS = [
   {name:"Green",val:"#22c55e"},
   {name:"Gold",val:"#eab308"},
 ];
-let me="", chat="", unsub=null, unsubSeen=null, accentColor="#1fb8a0";
+let me="", chat="", unsub=null, accentColor="#1fb8a0";
 const watched={};
-
 const saved=localStorage.getItem("mhn");
 if(saved){ me=saved; start(); } else { document.getElementById("login").style.display="flex"; }
-
 window.doLogin=function(){
   const n=document.getElementById("ni").value.trim();
   const p=document.getElementById("pi").value.trim();
@@ -177,31 +155,22 @@ window.doLogin=function(){
   document.getElementById("login").style.display="none";
   start();
 };
-
 function start(){
   document.getElementById("sn").textContent=me;
   document.getElementById("app").style.display="flex";
-  set(ref(db,"users/"+me+"/online"),true);
-  set(ref(db,"users/"+me+"/lastSeen"),Date.now());
+  set(ref(db,"users/"+me),{online:true});
   if("Notification" in window) Notification.requestPermission();
   const sc=localStorage.getItem("mhc");
-  if(sc){ accentColor=sc; }
+  if(sc){ accentColor=sc; applyColor(sc); }
   loadUsers();
   setInterval(()=>{
     const d=new Date();
     document.getElementById("st").textContent=d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes();
   },1000);
 }
-
 function ini(n){ return n.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2); }
 function cid(a,b){ return [a,b].sort().join("_"); }
 function ft(ts){ const d=new Date(ts); return d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes(); }
-
-function avatarHtml(pic, name, color){
-  if(pic) return '<img src="'+pic+'" alt=""/>';
-  return '<span style="color:'+color+'">'+ini(name)+'</span>';
-}
-
 function notify(from,text){
   const nb=document.getElementById("nb");
   nb.textContent=from+": "+text;
@@ -211,11 +180,17 @@ function notify(from,text){
   try{ const a=new Audio("https://cdn.freesound.org/previews/415/415510_5121236-lq.mp3"); a.volume=0.6; a.play(); }catch(e){}
   if(Notification.permission==="granted") new Notification("MyHomie - "+from,{body:text});
 }
-
 function applyColor(val){
   accentColor=val;
+  document.querySelectorAll(".av,.cav,.bk,.cts,.ni.on").forEach(el=>el.style.color=val);
+  document.querySelectorAll(".av,.cav").forEach(el=>el.style.borderColor=val);
+  document.querySelectorAll("#sbtn").forEach(el=>el.style.background=val);
+  document.querySelectorAll(".inp:focus,.minp:focus").forEach(el=>el.style.borderColor=val);
+  document.querySelectorAll(".me .bbl").forEach(el=>{
+    el.style.background=val+"20";
+    el.style.borderColor=val+"50";
+  });
 }
-
 function loadUsers(){
   onValue(ref(db,"users"),snap=>{
     const data=snap.val()||{};
@@ -223,19 +198,16 @@ function loadUsers(){
     cl.innerHTML="";
     Object.keys(data).forEach(name=>{
       if(name===me) return;
-      const user=data[name]||{};
-      const pic=user.pic||"";
       const d=document.createElement("div");
       d.className="ci";
-      d.innerHTML=`<div class="av" style="border-color:${accentColor}">${avatarHtml(pic,name,accentColor)}</div><div><div class="cn">${name}</div><div class="cp">Tap to chat</div></div>`;
-      d.onclick=()=>openChat(name, pic);
+      d.innerHTML='<div class="av" style="border-color:'+accentColor+';color:'+accentColor+'">'+ini(name)+'</div><div><div class="cn">'+name+'</div><div class="cp">Tap to chat</div></div>';
+      d.onclick=()=>openChat(name);
       cl.appendChild(d);
       cl.appendChild(Object.assign(document.createElement("div"),{className:"div"}));
       watchMsgs(name);
     });
   });
 }
-
 function watchMsgs(name){
   if(watched[name]) return;
   watched[name]=true;
@@ -250,68 +222,34 @@ function watchMsgs(name){
     }
   });
 }
-
-window.openChat=function(name, pic){
+window.openChat=function(name){
   chat=name;
-  const cavEl=document.getElementById("cav");
-  cavEl.style.borderColor=accentColor;
-  cavEl.innerHTML=avatarHtml(pic||"",name,accentColor);
+  document.getElementById("cav").textContent=ini(name);
+  document.getElementById("cav").style.borderColor=accentColor;
+  document.getElementById("cav").style.color=accentColor;
   document.getElementById("ctn").textContent=name;
-  document.getElementById("cts").style.color=accentColor;
+  document.getElementById("cts") && (document.getElementById("cts").style.color=accentColor);
   document.getElementById("p2").classList.remove("off");
   const msgs=document.getElementById("msgs");
   msgs.innerHTML="";
   if(unsub) unsub();
-  if(unsubSeen) unsubSeen();
-
-  const chatId=cid(me,name);
-
-  set(ref(db,"seen/"+chatId+"/"+me),Date.now());
-
-  let chatPic="";
-  get(ref(db,"users/"+name+"/pic")).then(s=>{ chatPic=s.val()||""; });
-
-  unsubSeen=onValue(ref(db,"seen/"+chatId+"/"+name),(snap)=>{
-    const seenTs=snap.val()||0;
-    document.querySelectorAll(".msg.me .seen-tick").forEach(el=>{
-      const msgTs=parseInt(el.dataset.ts||"0");
-      if(seenTs>=msgTs){
-        el.textContent="✓✓";
-        el.style.color=accentColor;
-      } else {
-        el.textContent="✓";
-        el.style.color="#6b7a8d";
-      }
+  unsub=onValue(ref(db,"chats/"+cid(me,name)),snap=>{
+    msgs.innerHTML="";
+    Object.values(snap.val()||{}).forEach(msg=>{
+      const d=document.createElement("div");
+      d.className="msg "+(msg.sender===me?"me":"them");
+      const bblStyle=msg.sender===me?'style="background:'+accentColor+'20;border-color:'+accentColor+'50"':'';
+      d.innerHTML='<div class="bbl" '+bblStyle+'>'+msg.text+'</div><span class="mt">'+ft(msg.ts)+'</span>';
+      msgs.appendChild(d);
     });
-  });
-
-  unsub=onValue(ref(db,"chats/"+chatId),snap=>{
-    const seenRef=ref(db,"seen/"+chatId+"/"+name);
-    get(seenRef).then(seenSnap=>{
-      const seenTs=seenSnap.val()||0;
-      msgs.innerHTML="";
-      Object.values(snap.val()||{}).forEach(msg=>{
-        const d=document.createElement("div");
-        const isMe=msg.sender===me;
-        d.className="msg "+(isMe?"me":"them");
-        const bblStyle=isMe?`style="background:${accentColor}40;border-color:${accentColor}50"`:"";
-        const tick=isMe?`<span class="seen-tick" data-ts="${msg.ts}" style="color:${seenTs>=msg.ts?accentColor:'#6b7a8d'}">${seenTs>=msg.ts?"✓✓":"✓"}</span>`:"";
-        d.innerHTML=`<div class="bbl" ${bblStyle}>${msg.text}</div><span class="mt">${ft(msg.ts)} ${tick}</span>`;
-        msgs.appendChild(d);
-      });
-      msgs.scrollTop=msgs.scrollHeight;
-      set(ref(db,"seen/"+chatId+"/"+me),Date.now());
-    });
+    msgs.scrollTop=msgs.scrollHeight;
   });
 };
-
 window.goBack=function(){
   document.getElementById("p2").classList.add("off");
   chat="";
   if(unsub){ unsub(); unsub=null; }
-  if(unsubSeen){ unsubSeen(); unsubSeen=null; }
 };
-
 window.doSend=function(){
   const inp=document.getElementById("mi");
   const text=inp.value.trim();
@@ -319,7 +257,6 @@ window.doSend=function(){
   push(ref(db,"chats/"+cid(me,chat)),{sender:me,text:text,ts:Date.now()});
   inp.value="";
 };
-
 window.showPage=function(n){
   document.getElementById("p1").classList.toggle("off",n!==1);
   document.getElementById("p3").classList.toggle("off",n!==3);
@@ -331,49 +268,8 @@ window.showPage=function(n){
   if(n===3){
     document.getElementById("set-name").textContent=me;
     loadColorGrid();
-    loadProfilePic();
   }
 };
-
-function loadProfilePic(){
-  const ppEl=document.getElementById("pp-large");
-  get(ref(db,"users/"+me+"/pic")).then(snap=>{
-    const pic=snap.val();
-    if(pic){
-      ppEl.innerHTML='<img src="'+pic+'" alt=""/>';
-    } else {
-      ppEl.style.color=accentColor;
-      ppEl.style.borderColor=accentColor;
-      ppEl.innerHTML='<span>'+ini(me)+'</span>';
-    }
-  });
-}
-
-window.handlePicChange=function(e){
-  const file=e.target.files[0];
-  if(!file) return;
-  const reader=new FileReader();
-  reader.onload=function(ev){
-    const img=new Image();
-    img.onload=function(){
-      const canvas=document.createElement("canvas");
-      const size=150;
-      canvas.width=size; canvas.height=size;
-      const ctx=canvas.getContext("2d");
-      const min=Math.min(img.width,img.height);
-      const sx=(img.width-min)/2, sy=(img.height-min)/2;
-      ctx.drawImage(img,sx,sy,min,min,0,0,size,size);
-      const b64=canvas.toDataURL("image/jpeg",0.6);
-      set(ref(db,"users/"+me+"/pic"),b64).then(()=>{
-        loadProfilePic();
-        loadUsers();
-      });
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-};
-
 function loadColorGrid(){
   const grid=document.getElementById("cgrid");
   grid.innerHTML="";
@@ -381,7 +277,7 @@ function loadColorGrid(){
   COLORS.forEach(c=>{
     const d=document.createElement("div");
     d.className="color-dot"+(c.val===current?" selected":"");
-    d.style.background=c.val;
+    d.style.background=c.gradient||c.val;
     d.title=c.name;
     d.onclick=()=>{
       localStorage.setItem("mhc",c.val);
@@ -391,7 +287,6 @@ function loadColorGrid(){
     grid.appendChild(d);
   });
 }
-
 window.doLogout=function(){
   localStorage.clear();
   location.reload();
